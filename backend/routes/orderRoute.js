@@ -4,7 +4,7 @@ import { isAuth, isAdmin } from '../util';
 
 const router = express.Router();
 
-router.get("/", isAuth, async (req, res) => {
+router.get("/", isAuth, isAdmin, async (req, res) => {
   const orders = await Order.find({}).populate('user');
   res.send(orders);
 });
@@ -42,6 +42,11 @@ router.post("/", isAuth, async (req, res) => {
     taxPrice: req.body.taxPrice,
     shippingPrice: req.body.shippingPrice,
     totalPrice: req.body.totalPrice,
+    isPaid: true,
+    paidAt: Date.now(),
+    payment: {
+      paymentMethod: 'cod'
+    }
   });
   const newOrderCreated = await newOrder.save();
   res.status(201).send({ message: "New Order Created", data: newOrderCreated });
@@ -53,7 +58,7 @@ router.put("/:id/pay", isAuth, async (req, res) => {
     order.isPaid = true;
     order.paidAt = Date.now();
     order.payment = {
-      paymentMethod: 'paypal',
+      paymentMethod: 'cod',
       paymentResult: {
         payerID: req.body.payerID,
         orderID: req.body.orderID,

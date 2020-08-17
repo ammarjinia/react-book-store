@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, saveProductReview } from '../actions/productActions';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
+import { detailsShop } from '../actions/shopActions';
 
 function ProductScreen(props) {
   const [qty, setQty] = useState(1);
@@ -15,6 +16,10 @@ function ProductScreen(props) {
   const { product, loading, error } = productDetails;
   const productReviewSave = useSelector((state) => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
+  
+  const shopDetails = useSelector((state) => state.shopDetails);
+  const { shops, loadingshopDetails, errorshopDetails } = shopDetails;
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,6 +30,7 @@ function ProductScreen(props) {
       dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
     }
     dispatch(detailsProduct(props.match.params.id));
+    dispatch(detailsShop(product.shopId));
     return () => {
       //
     };
@@ -54,7 +60,9 @@ function ProductScreen(props) {
         <>
         <div className="breadcrumb">
             <div className="container">
-                <a className="breadcrumb-item" href="/">Home</a>
+                <Link className="breadcrumb-item" to={process.env.PUBLIC_URL+"/"}>Home</Link>
+                <Link className="breadcrumb-item" to={process.env.PUBLIC_URL+"/shop"}>Shop</Link>
+        {/*<Link className="breadcrumb-item" to={process.env.PUBLIC_URL+"/shopbooks/"}></Link>*/}
                 <span className="breadcrumb-item active">{product.name}</span>
             </div>
         </div>
@@ -75,7 +83,7 @@ function ProductScreen(props) {
                     </div>
                     <div className="col-md-6 slider-content">
                         <p>{product.description}</p>
-                        <p><Rating value={product.rating} text={'('+product.numReviews + ' reviews)'}/></p>
+                        <p><Rating value={product.rating} text={'('+product.numReviews + ' reviews)'} /></p>
                         <ul>
                             <li>
                                 <span className="name">Status:{' '}</span>
@@ -94,7 +102,7 @@ function ProductScreen(props) {
                         </ul>
                         <div className="btn-sec">
                             {product.countInStock > 0 && (
-                                <button onClick={handleAddToCart} className="btn">Add To cart</button>
+                                <button onClick={handleAddToCart} className="btn btn-primary btn-lg">Add To cart</button>
                             )}
                         </div>
                     </div>

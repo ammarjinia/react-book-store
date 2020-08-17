@@ -5,6 +5,9 @@ import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import PaypalButton from '../components/PaypalButton';
 function OrderScreen(props) {
 
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
+  
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
   const dispatch = useDispatch();
@@ -27,7 +30,14 @@ function OrderScreen(props) {
 
   return (
           loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
-
+          <>
+<div className="breadcrumb">
+            <div className="container">
+                <Link className="breadcrumb-item" to={process.env.PUBLIC_URL+"/"}>Home</Link>
+                <Link className="breadcrumb-item" to={process.env.PUBLIC_URL+((userInfo.isAdmin) ? "/orders" : "/myorders")}>Orders</Link>
+                <span className="breadcrumb-item active">{order._id}</span>
+            </div>
+        </div>
             <section className="static about-sec">
                 <div className="container">
     <div>
@@ -87,7 +97,7 @@ function OrderScreen(props) {
                         </div>
                       </div>
                       <div className="cart-price">
-                        ${item.price}
+                        Rs{item.price}
                       </div>
                     </li>
                   )
@@ -112,19 +122,19 @@ function OrderScreen(props) {
             </li>
             <li>
               <div>Items</div>
-              <div>${order.itemsPrice}</div>
+              <div>Rs{order.itemsPrice}</div>
             </li>
             <li>
               <div>Shipping</div>
-              <div>${order.shippingPrice}</div>
+              <div>Rs{order.shippingPrice}</div>
             </li>
             <li>
               <div>Tax</div>
-              <div>${order.taxPrice}</div>
+              <div>Rs{order.taxPrice}</div>
             </li>
             <li>
               <div>Order Total</div>
-              <div>${order.totalPrice}</div>
+              <div>Rs{order.totalPrice}</div>
             </li>
           </ul>
 
@@ -136,6 +146,7 @@ function OrderScreen(props) {
     </div>
     </div>
     </section>
+    </>
 );
 }
 

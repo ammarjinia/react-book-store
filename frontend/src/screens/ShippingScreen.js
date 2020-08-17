@@ -18,9 +18,14 @@ function ShippingScreen(props) {
     dispatch(saveShipping({ address, city, postalCode, country }));
     props.history.push('payment');
   }
-  return <div>
+  return (
+        <>
+            <section class="static about-sec">
+                <div class="container">
+                    <div className="row">
+                        <div className="offset-3 col-6">
     <CheckoutSteps step1 step2 ></CheckoutSteps>
-    <div className="form">
+    <div className="form1">
       <form onSubmit={submitHandler} >
         <ul className="form-container">
           <li>
@@ -58,13 +63,17 @@ function ShippingScreen(props) {
 
 
           <li>
-            <button type="submit" className="button primary">Continue</button>
+            <button type="submit" className="btn btn-primary">Continue</button>
           </li>
 
         </ul>
       </form>
     </div>
   </div>
-
+  </div>
+  </div>
+  </section>
+</>
+);
 }
 export default ShippingScreen;

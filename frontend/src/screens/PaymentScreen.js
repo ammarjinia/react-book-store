@@ -15,10 +15,13 @@ function PaymentScreen(props) {
     props.history.push('placeorder');
   };
   return (
-   <section className="product-sec">
-      <div className="container">
+        <>
+            <section class="static about-sec">
+                <div class="container">
+                    <div className="row">
+                        <div className="offset-3 col-6">
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
-      <div className="form">
+      <div className="form1">
         <form onSubmit={submitHandler}>
           <ul className="form-container">
             <li>
@@ -33,7 +36,7 @@ function PaymentScreen(props) {
             </li>
 
             <li>
-              <button type="submit" className="button primary">
+              <button type="submit" className="btn btn-primary">
                 Continue
               </button>
             </li>
@@ -41,7 +44,10 @@ function PaymentScreen(props) {
         </form>
       </div>
     </div>
+    </div>
+    </div>
     </section>
+    </>
   );
 }
 export default PaymentScreen;

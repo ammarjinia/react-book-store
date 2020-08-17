@@ -62,10 +62,12 @@ button {
 }
 a {
   text-decoration: none;
+  color:rgba(0,0,0,.7);
 }
-a:hover {
+a:hover, .list-group-item .active{
   color: #ff8000;
 }
+
 /* Home Screen */
 .products {
   display: flex;
@@ -278,35 +280,39 @@ a > .rating > span:last-child {
 }
 .cart-price {
   flex: 1 1;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   text-align: right;
 }
 
 /* forms */
 
-.form {
+/*.form {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-}
+}*/
 .form-container {
   display: flex;
   flex-direction: column;
-  width: 32rem;
+  /*width: 32rem;*/
   padding: 2rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
   list-style-type: none;
+  margin-bottom: 3rem;
+}
+
+.form-container li h2{
+    margin-bottom: 0;
 }
 .form-container li {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
   margin-top: 1rem;
 }
-input {
-  padding: 1rem;
+input, select, textarea {
+  padding: 0.5rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
 }
@@ -323,7 +329,7 @@ input {
   margin: 1rem;
 }
 
-.table {
+/*.table {
   width: 100%;
 }
 th {
@@ -331,7 +337,7 @@ th {
 }
 tbody > tr:nth-child(odd) {
   background-color: #f0f0f0;
-}
+}*/
 
 /* Checkout Steps */
 

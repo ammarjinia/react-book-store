@@ -77,4 +77,15 @@ router.post('/register', async (req, res) => {
   }
 });*/
 
+router.get('/', async (req, res) => {
+    
+  const sortOrder = req.query.sortOrder
+    ? req.query.sortOrder === 'lowest'
+    : { _id: -1 };
+  const users = await User.find().sort(
+    sortOrder
+  );
+  res.send(users);
+});
+
 export default router;

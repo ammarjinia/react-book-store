@@ -3,88 +3,76 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Sidebar from '../layout/Sidebar'; 
 import {
-  saveProduct,
-  listProducts,
-  deleteProdcut,
-} from '../actions/productActions';
-import {
+  saveShop,
   listShops,
+  deleteShop,
 } from '../actions/shopActions';
 
-function ProductsScreen(props) {
+function ShopsScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
-  const [brand, setBrand] = useState('');
-  const [category, setCategory] = useState('');
-  const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
-  const [shopId, setShopId] = useState('');
+  const [address, setAddress] = useState('');
+  const [owner, setOwner] = useState('');
+  const [phone, setPhone] = useState('');
   const [uploading, setUploading] = useState(false);
   const shopList = useSelector((state) => state.shopList);
-  const { loadingshops, shops, errorshops } = shopList;
-  const productList = useSelector((state) => state.productList);
-  const { loading, products, error } = productList;
-  
-  const productSave = useSelector((state) => state.productSave);
+  const { loading, shops, error } = shopList;
+
+  const shopSave = useSelector((state) => state.shopSave);
   const {
     loading: loadingSave,
     success: successSave,
     error: errorSave,
-  } = productSave;
+  } = shopSave;
 
-  const productDelete = useSelector((state) => state.productDelete);
+  const shopDelete = useSelector((state) => state.shopDelete);
   const {
     loading: loadingDelete,
     success: successDelete,
     error: errorDelete,
-  } = productDelete;
+  } = shopDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (successSave) {
       setModalVisible(false);
     }
-    dispatch(listProducts());
     dispatch(listShops());
     return () => {
       //
     };
   }, [successSave, successDelete]);
 
-  const openModal = (product) => {
+  const openModal = (shop) => {
     setModalVisible(true);
-    setId(product._id);
-    setName(product.name || "");
-    setPrice(product.price || "");
-    setDescription(product.description || "");
-    setImage(product.image || "");
-    setBrand(product.brand || "");
-    setCategory(product.category || "");
-    setCountInStock(product.countInStock || "");
-    setShopId(product.shopId || "");
+    setId(shop._id);
+    setName(shop.name || "");
+    setDescription(shop.description || "");
+    setAddress(shop.address || "");
+    setImage(shop.image || "");
+    setOwner(shop.owner || "");
+    setPhone(shop.phone || "");
   };
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      saveProduct({
+      saveShop({
         _id: id,
         name,
-        price,
         image,
-        brand,
-        category,
-        countInStock,
+        owner,
+        phone,
         description,
-        shopId
+        address,
       })
     );
   };
-  const deleteHandler = (product) => {
+  const deleteHandler = (shop) => {
       if (window.confirm("Are you sure to delete this data?")) {
-        dispatch(deleteProdcut(product._id));
+        dispatch(deleteShop(shop._id));
       }
   };
   const uploadFileHandler = (e) => {
@@ -112,14 +100,14 @@ function ProductsScreen(props) {
             <div class="breadcrumb">
                 <div class="container">
                     <a class="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
-                    <span class="breadcrumb-item active">Profile</span>
+                    <span class="breadcrumb-item active">Shops</span>
                 </div>
             </div>
             <section class="static about-sec">
                 <div class="container">
                     <div className="row">
                         <div className="col-2">
-                            <Sidebar activeMenu={'products'} />
+                            <Sidebar activeMenu={'shops'} />
                         </div>
                         <div className="col-10">
                 {modalVisible && (
@@ -127,28 +115,15 @@ function ProductsScreen(props) {
                       <form onSubmit={submitHandler}>
                         <ul className="form-container">
                           <li>
-                            <h2>{id ? 'Edit' : 'Create'} Product</h2>
+                            <h2>{id ? 'Edit' : 'Create'} Shop</h2>
                           </li>
                           <li>
                             {loadingSave && <div>Loading...</div>}
                             {errorSave && <div>{errorSave}</div>}
                           </li>
+
                           <li>
                             <label htmlFor="name">Shop Name</label>
-                            <select 
-                              name="shopId"
-                              value={shopId}
-                              id="shopId"
-                              onChange={(e) => setShopId(e.target.value)}
-                            >
-                                <option value="">Select Shop</option>
-                                {shops.map((shop) => (
-                                    <option key={shop._id} value={shop._id}>{shop.name}</option>        
-                                ))}
-                            </select>
-                          </li>  
-                          <li>
-                            <label htmlFor="name">Name</label>
                             <input
                               type="text"
                               name="name"
@@ -158,13 +133,23 @@ function ProductsScreen(props) {
                             ></input>
                           </li>
                           <li>
-                            <label htmlFor="price">Price</label>
+                            <label htmlFor="owner">Owner Name</label>
                             <input
                               type="text"
-                              name="price"
-                              value={price}
-                              id="price"
-                              onChange={(e) => setPrice(e.target.value)}
+                              name="owner"
+                              value={owner}
+                              id="owner"
+                              onChange={(e) => setOwner(e.target.value)}
+                            ></input>
+                          </li>
+                          <li>
+                            <label htmlFor="phone">Phone No.</label>
+                            <input
+                              type="text"
+                              name="phone"
+                              value={phone}
+                              id="phone"
+                              onChange={(e) => setPhone(e.target.value)}
                             ></input>
                           </li>
                           <li>
@@ -180,33 +165,13 @@ function ProductsScreen(props) {
                             {uploading && <div>Uploading...</div>}
                           </li>
                           <li>
-                            <label htmlFor="brand">Brand</label>
+                            <label htmlFor="address">Address</label>
                             <input
                               type="text"
-                              name="brand"
-                              value={brand}
-                              id="brand"
-                              onChange={(e) => setBrand(e.target.value)}
-                            ></input>
-                          </li>
-                          <li>
-                            <label htmlFor="countInStock">CountInStock</label>
-                            <input
-                              type="text"
-                              name="countInStock"
-                              value={countInStock}
-                              id="countInStock"
-                              onChange={(e) => setCountInStock(e.target.value)}
-                            ></input>
-                          </li>
-                          <li>
-                            <label htmlFor="name">Category</label>
-                            <input
-                              type="text"
-                              name="category"
-                              value={category}
-                              id="category"
-                              onChange={(e) => setCategory(e.target.value)}
+                              name="address"
+                              value={address}
+                              id="address"
+                              onChange={(e) => setAddress(e.target.value)}
                             ></input>
                           </li>
                           <li>
@@ -238,9 +203,9 @@ function ProductsScreen(props) {
                     </div>
                 )}
                 <div className="product-header">
-                    <h2>Products</h2>
+                    <h2>Shops</h2>
                     <button className="btn btn-primary btn-lg" onClick={() => openModal({})}>
-                      Create Product
+                      Create Shop
                     </button>
                 </div>
                 <div className="product-list">
@@ -249,27 +214,23 @@ function ProductsScreen(props) {
                       <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Brand</th>
-                        <th>Action</th>
+                        <th>Address</th>
+                        <th align="right">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {products.map((product) => (
-                        <tr key={product._id}>
-                          <td>{product._id}</td>
-                          <td>{product.name}</td>
-                          <td>{product.price}</td>
-                          <td>{product.category}</td>
-                          <td>{product.brand}</td>
+                      {shops.map((shop) => (
+                        <tr key={shop._id}>
+                          <td>{shop._id}</td>
+                          <td>{shop.name}</td>
+                          <td>{shop.address}</td>
                           <td>
-                            <button className="btn btn-info btn-sm" onClick={() => openModal(product)}>
+                            <button className="btn btn-info btn-sm" onClick={() => openModal(shop)}>
                               Edit
                             </button>{' '}
                             <button
                               className="btn btn-danger btn-sm"
-                              onClick={() => deleteHandler(product)}
+                              onClick={() => deleteHandler(shop)}
                             >
                               Delete
                             </button>
@@ -286,4 +247,4 @@ function ProductsScreen(props) {
     </>
   );
 }
-export default ProductsScreen;
+export default ShopsScreen;

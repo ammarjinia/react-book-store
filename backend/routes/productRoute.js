@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const category = req.query.category ? { category: req.query.category } : {};
+  const shopId = req.query.shopId ? { shopId: req.query.shopId } : {};
   const searchKeyword = req.query.searchKeyword
     ? {
         name: {
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
-  const products = await Product.find({ ...category, ...searchKeyword }).sort(
+  const products = await Product.find({ ...category, ...searchKeyword, ...shopId }).sort(
     sortOrder
   );
   res.send(products);
@@ -66,6 +67,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     product.category = req.body.category;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
+    product.shopId = req.body.shopId;
     const updatedProduct = await product.save();
     if (updatedProduct) {
       return res
@@ -97,6 +99,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
     description: req.body.description,
     rating: req.body.rating,
     numReviews: req.body.numReviews,
+    shopId: req.body.shopId,
   });
   const newProduct = await product.save();
   if (newProduct) {

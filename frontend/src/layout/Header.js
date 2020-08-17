@@ -1,11 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { listProducts } from '../actions/productActions';
 
-function Header() {  
+function Header(props) {
+        const [activeMenu, setActiveMenu] = useState("/");
     
         const userSignin = useSelector((state) => state.userSignin);
         const { userInfo } = userSignin;
+        
+        const [search, setSearch] = useState('');
+        
+        const searchparam = window.location.search;
+        const params = new URLSearchParams(searchparam);
+        const searchKeyword = params.get('search');
+        
+        useEffect(() => {
+            setSearch(searchKeyword);
+            return () => {
+              //
+            };
+        }, [searchKeyword]);
+        
         return (  
             <div>
                 <header>
@@ -27,19 +43,19 @@ function Header() {
                                 </button>
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav ml-auto">
-                                        <li className="navbar-item active">
-                                            <Link to={process.env.PUBLIC_URL+"/"}>Home</Link>
+                                        <li className="navbar-item">
+                                            <Link to={process.env.PUBLIC_URL+"/"} className={activeMenu == '/' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("/")}>Home</Link>
                                         </li>
                                         <li className="navbar-item">
-                                            <a href="#" className="nav-link">Shop</a>
+                                            <Link to={process.env.PUBLIC_URL+"/shop"} className={activeMenu == 'Shop' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("Shop")}>Shop</Link>
                                         </li>
                                         <li className="navbar-item">
-                                            <a href="#" className="nav-link">About</a>
+                                            <Link to={process.env.PUBLIC_URL+"/aboutus"} className={activeMenu == 'aboutus' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("aboutus")}>About</Link>
                                         </li>
                                         <li className="navbar-item">
                                             {userInfo ? (
                                               <>
-                                              <Link to={process.env.PUBLIC_URL+"/profile"}>{userInfo.name}</Link>
+                                              <Link to={process.env.PUBLIC_URL+"/profile"}  className={activeMenu == 'profile' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("profile")}>{userInfo.name}</Link>
                                       {/*<ul>
                                                 <li>
                                                     <Link to={process.env.PUBLIC_URL+"/products"}>Products</Link>
@@ -55,11 +71,15 @@ function Header() {
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="cart my-2 my-lg-0">
+                                <div className="cart ml-0 my-lg-0">
                                     <Link to={process.env.PUBLIC_URL+"/cart"} className="nav-link">
-                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                        <span><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                     </Link>    
                                 </div>
+                                <form className="form-inline my-2 my-lg-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                                    <input className="form-control mr-sm-2" name="search" type="search" placeholder="Search here..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} value={search || ''} />
+                                    <span className="fa fa-search"></span>
+                                </form>
                             </nav>
                         </div>
                     </div>

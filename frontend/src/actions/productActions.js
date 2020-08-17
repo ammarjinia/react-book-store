@@ -39,6 +39,21 @@ const listProducts = (
   }
 };
 
+const shopProducts = (
+  shopId = ''
+) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
+    const { data } = await axios.get(
+      '/api/products?shopId=' +
+        shopId
+    );
+    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+  }
+};
+
 const saveProduct = (product) => async (dispatch, getState) => {
   try {
       console.log("Product Saving...")
@@ -123,6 +138,7 @@ const saveProductReview = (productId, review) => async (dispatch, getState) => {
 
 export {
   listProducts,
+  shopProducts,
   detailsProduct,
   saveProduct,
   deleteProdcut,

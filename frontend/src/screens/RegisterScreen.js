@@ -27,7 +27,19 @@ function RegisterScreen(props) {
     e.preventDefault();
     dispatch(register(name, email, password));
   }
-  return <div className="form">
+  return (
+        <>
+            <div class="breadcrumb">
+                <div class="container">
+                    <a class="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
+                    <span class="breadcrumb-item active">Register</span>
+                </div>
+            </div>
+            <section class="static about-sec">
+                <div class="container">
+                    <div className="row">
+                        <div className="offset-4 col-4">
+                            <div className="form1">
     <form onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
@@ -62,16 +74,23 @@ function RegisterScreen(props) {
           </input>
         </li>
         <li>
-          <button type="submit" className="button primary">Register</button>
+          <button type="submit" className="btn btn-primary btn-lg">Register</button>
         </li>
         <li>
-          <p>Already have an account?</p>
-          <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary text-center" >Sign In</Link>
+          <span>Already have an account?</span>
+          <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="btn btn-secondary text-center" >Sign In</Link>
 
         </li>
 
       </ul>
     </form>
+
   </div>
-}
+  </div>
+  </div>
+  </div>
+  </section>
+  </>
+);
+          }
 export default RegisterScreen;
