@@ -47,7 +47,15 @@ function Header(props) {
                                             <Link to={process.env.PUBLIC_URL+"/"} className={activeMenu == '/' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("/")}>Home</Link>
                                         </li>
                                         <li className="navbar-item">
-                                            <Link to={process.env.PUBLIC_URL+"/shop"} className={activeMenu == 'Shop' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("Shop")}>Shop</Link>
+                                            <Link to={process.env.PUBLIC_URL+"/shop"} className={activeMenu == 'Shop' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("Shop")}>Shop <span className="caret"></span></Link>
+                                            <ul className="navbar-subnav">
+                                                <li className="navbar-subitem">
+                                                    <Link to="/category/Engineering">Engineering</Link>
+                                                </li>
+                                                <li className="navbar-subitem">
+                                                    <Link to="/category/Biography">Biography</Link>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li className="navbar-item">
                                             <Link to={process.env.PUBLIC_URL+"/aboutus"} className={activeMenu == 'aboutus' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("aboutus")}>About</Link>
@@ -76,10 +84,10 @@ function Header(props) {
                                         <span><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                     </Link>    
                                 </div>
-                                <form className="form-inline my-2 my-lg-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                        {/*<form className="form-inline my-2 my-lg-0" action={process.env.PUBLIC_URL+"/productlist"}>
                                     <input className="form-control mr-sm-2" name="search" type="search" placeholder="Search here..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} value={search || ''} />
                                     <span className="fa fa-search"></span>
-                                </form>
+                                </form>*/}
                             </nav>
                         </div>
                     </div>

@@ -42,6 +42,17 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/resetuser', async (req, res) => {
+  const resetUser = await User.findOne({
+    email: req.body.email,
+  });
+  if (resetUser) {
+    res.status(200).send({ message: "New Order Created"});
+  } else {
+    res.status(401).send({ message: 'Invalid Email' });
+  }
+});
+
 router.post('/register', async (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -62,12 +73,12 @@ router.post('/register', async (req, res) => {
   }
 });
 
-/*router.get('/createadmin', async (req, res) => {
+router.get('/createadmin', async (req, res) => {
   try {
     const user = new User({
-      name: 'Basir',
-      email: 'basir.jafarzadeh@gmail.com',
-      password: '1234',
+      name: 'Admin',
+      email: 'admin@gmail.com',
+      password: '123456',
       isAdmin: true,
     });
     const newUser = await user.save();
@@ -75,7 +86,7 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res.send({ message: error.message });
   }
-});*/
+});
 
 router.get('/', async (req, res) => {
     

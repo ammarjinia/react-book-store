@@ -1,4 +1,4 @@
-import { USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
+import { USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_RESET_REQUEST, USER_RESET_SUCCESS, USER_RESET_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
 USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
@@ -17,6 +17,20 @@ function userSigninReducer(state = {}, action) {
     case USER_SIGNIN_SUCCESS:
       return { loading: false, userInfo: action.payload };
     case USER_SIGNIN_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default: return state;
+  }
+}
+
+function userResetReducer(state = {}, action) {
+  switch (action.type) {
+    case USER_RESET_REQUEST:
+      return { loading: true };
+    case USER_RESET_SUCCESS:
+      return { loading: false, success: action.payload };
+    case USER_RESET_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
       return {};
@@ -86,7 +100,7 @@ function userSaveReducer(state = { user: {} }, action) {
   }
 }
 export {
-  userSigninReducer, userRegisterReducer, userUpdateReducer,
+  userSigninReducer, userResetReducer, userRegisterReducer, userUpdateReducer,
   userListReducer,
   userSaveReducer,
   userDeleteReducer

@@ -29,14 +29,14 @@ function RegisterScreen(props) {
   }
   return (
         <>
-            <div class="breadcrumb">
-                <div class="container">
-                    <a class="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
-                    <span class="breadcrumb-item active">Register</span>
+            <div className="breadcrumb">
+                <div className="container">
+                    <a className="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
+                    <span className="breadcrumb-item active">Register</span>
                 </div>
             </div>
-            <section class="static about-sec">
-                <div class="container">
+            <section className="static about-sec">
+                <div className="container">
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">

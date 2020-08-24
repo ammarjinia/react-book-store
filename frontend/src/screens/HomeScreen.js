@@ -41,7 +41,28 @@ function HomeScreen(props) {
                                 <div className="title">
                                     <h3>welcome to bookstore</h3>
                                     <h5>Discover the best books online with us</h5>
-                                    <a href={process.env.PUBLIC_URL+"/shop"} className="btn">shop books</a>
+                                    <form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                                        <div className="row">
+                                            <div className="col-2 offset-4 text-left">
+                                                <label>Category</label><br />
+                                                <select id="category" name="category">
+                                                    <option value="">Select Category</option>
+                                                    cont cat = [];
+                                                    {products.map((product) => (
+                                                        <option key={ product.category } value={ product.category }>{ product.category }</option>
+                                                    ))}
+                                                </select>
+                                            </div>    
+                                            <div className="text-left">
+                                                <label>Keyword</label><br />
+                                                <input type="text" id="search" name="search" />
+                                            </div>    
+                                            <div className="col-1 text-left">
+                                                <label>&nbsp;</label><div className="clearfix"></div>
+                                                <button type="submit" className="btn btn-primary">Search</button>
+                                            </div>    
+                                        </div>    
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +74,29 @@ function HomeScreen(props) {
                                 <div className="title">
                                     <h3>welcome to bookstore</h3>
                                     <h5>Discover the best books online with us</h5>
-                                    <a href={process.env.PUBLIC_URL+"/shop"} className="btn">shop books</a>
+                                    
+                                    <form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                                        <div className="row">
+                                            <div className="col-2 offset-4 text-left">
+                                                <label>Category</label><br />
+                                                <select id="category" name="category">
+                                                    <option value="">Select Category</option>
+                                                    cont cat = [];
+                                                    {products.map((product) => (
+                                                        <option key={ product.category } value={ product.category }>{ product.category }</option>
+                                                    ))}
+                                                </select>
+                                            </div>    
+                                            <div className="text-left">
+                                                <label>Keyword</label><br />
+                                                <input type="text" id="search" name="search" />
+                                            </div>    
+                                            <div className="col-1 text-left">
+                                                <label>&nbsp;</label><div className="clearfix"></div>
+                                                <button type="submit" className="btn btn-primary">Search</button>
+                                            </div>    
+                                        </div>    
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +143,7 @@ function HomeScreen(props) {
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and Scrambled it to make a type and typesetting industry. Lorem Ipsum has been the book. </p>
                     <p>It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and</p>
                     <div className="btn-sec">
-                        <Link to={process.env.PUBLIC_URL+"/shop"} className="btn yellow">Shop Books</Link>
+                        <Link to={process.env.PUBLIC_URL+"/shop"}  className="btn btn-primary">Shop Books</Link>
                     </div>
                 </div>
             </section>
@@ -114,7 +157,7 @@ function HomeScreen(props) {
                         {products.map((product) => (
                         <div className="col-lg-2 col-md-3 col-sm-4" key={product._id}>
                             <div className="item">
-                                <Link to={'/product/' + product._id}><img src={product.image} alt="" /></Link>
+                                <Link to={'/product/' + product._id}><img src={product.image} alt="" height="260px" /></Link>
                                 <h3><Link to={'/product/' + product._id}>{ product.name }</Link></h3>
                                 <h6><span className="price">Rs{product.price}</span> / <Link to={'/product/' + product._id}>Buy Now</Link></h6>
                             </div>

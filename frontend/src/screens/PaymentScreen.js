@@ -16,8 +16,8 @@ function PaymentScreen(props) {
   };
   return (
         <>
-            <section class="static about-sec">
-                <div class="container">
+            <section className="static about-sec">
+                <div className="container">
                     <div className="row">
                         <div className="offset-3 col-6">
       <CheckoutSteps step1 step2 step3></CheckoutSteps>

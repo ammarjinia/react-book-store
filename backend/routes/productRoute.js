@@ -34,6 +34,32 @@ router.get('/:id', async (req, res) => {
     res.status(404).send({ message: 'Product Not Found.' });
   }
 });
+
+router.delete('/:id/reviews/:rid', isAuth, isAdmin, async (req, res) => {
+    if (req.params.id) {
+        const product = await Product.findById(req.params.id);
+        product.numReviews = product.reviews.length-1;
+        product.rating =
+          product.reviews.reduce((a, c) => c.rating + a, 0) /
+          product.reviews.length-1;
+        const updatedProduct = await product.save();
+        const products = await Product.findOneAndUpdate({_id:req.params.id},{$pull: {reviews: {_id:req.params.rid}}},{new:true},
+            function(err, data){
+                if(err) {
+                  return res.status(401).json({'error' : 'Something went wrong!'});
+                } else {
+                    res.status(201).send({
+                        data: data,
+                        message: 'Review deleted successfully!',
+                    });
+                }
+            }
+        );
+    } else {
+        res.status(404).send({ message: 'Something went wrong!' });
+    }
+});
+
 router.post('/:id/reviews', isAuth, async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (product) {

@@ -9,7 +9,7 @@ export class Layout extends Component {
             <div>  
                 <div id="wrapper">  
                     <Leftside></Leftside>  
-                    <div id="content-wrapper" class="d-flex flex-column">  
+                    <div id="content-wrapper" className="d-flex flex-column">  
                         <div id="content">  
                             <Header />  
                             <Home/>  

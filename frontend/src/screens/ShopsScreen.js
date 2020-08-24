@@ -97,14 +97,14 @@ function ShopsScreen(props) {
   };
   return (
         <>
-            <div class="breadcrumb">
-                <div class="container">
-                    <a class="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
-                    <span class="breadcrumb-item active">Shops</span>
+            <div className="breadcrumb">
+                <div className="container">
+                    <a className="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
+                    <span className="breadcrumb-item active">Shops</span>
                 </div>
             </div>
-            <section class="static about-sec">
-                <div class="container">
+            <section className="static about-sec">
+                <div className="container">
                     <div className="row">
                         <div className="col-2">
                             <Sidebar activeMenu={'shops'} />

@@ -40,13 +40,21 @@ const listProducts = (
 };
 
 const shopProducts = (
-  shopId = ''
+  shopId = '',
+  category = '',
+  searchKeyword = '',
+  sortOrder = ''
 ) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
       '/api/products?shopId=' +
-        shopId
+        shopId+'&category=' +
+        category +
+        '&searchKeyword=' +
+        searchKeyword +
+        '&sortOrder=' +
+        sortOrder
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -112,6 +120,23 @@ const deleteProdcut = (productId) => async (dispatch, getState) => {
   }
 };
 
+const deleteProductReview = (productId, reviewId) => async (dispatch, getState) => {
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
+    const { data } = await axios.delete('/api/products/' + productId+'/reviews/' + reviewId, {
+      headers: {
+        Authorization: 'Bearer ' + userInfo.token,
+      },
+    });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.message });
+  }
+};
+
 const saveProductReview = (productId, review) => async (dispatch, getState) => {
   try {
     const {
@@ -143,4 +168,5 @@ export {
   saveProduct,
   deleteProdcut,
   saveProductReview,
+  deleteProductReview,
 };

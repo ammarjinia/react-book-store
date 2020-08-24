@@ -6,13 +6,16 @@ import {
   saveProduct,
   listProducts,
   deleteProdcut,
+  deleteProductReview,
 } from '../actions/productActions';
 import {
   listShops,
 } from '../actions/shopActions';
+import Rating from '../components/Rating';
 
 function ProductsScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalReviewVisible, setModalReviewVisible] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -22,6 +25,7 @@ function ProductsScreen(props) {
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
   const [shopId, setShopId] = useState('');
+  const [reviews, setReviews] = useState('');
   const [uploading, setUploading] = useState(false);
   const shopList = useSelector((state) => state.shopList);
   const { loadingshops, shops, errorshops } = shopList;
@@ -41,11 +45,24 @@ function ProductsScreen(props) {
     success: successDelete,
     error: errorDelete,
   } = productDelete;
+
+const productReviewDelete = useSelector((state) => state.productReviewDelete);
+  const {
+    loading: loadingReviewDelete,
+    success: successReviewDelete,
+    error: errorReviewDelete,
+    product:productReview
+  } = productReviewDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (successSave) {
       setModalVisible(false);
+    }
+    
+    if (successReviewDelete) {
+        console.log(productReview.data.reviews);
+        setReviews(productReview.data.reviews);
     }
     dispatch(listProducts());
     dispatch(listShops());
@@ -65,6 +82,12 @@ function ProductsScreen(props) {
     setCategory(product.category || "");
     setCountInStock(product.countInStock || "");
     setShopId(product.shopId || "");
+  };
+
+  const openReviewModal = (product) => {
+    setModalReviewVisible(true);
+    setId(product._id);
+    setReviews(product.reviews || "");
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -87,7 +110,13 @@ function ProductsScreen(props) {
         dispatch(deleteProdcut(product._id));
       }
   };
-  const uploadFileHandler = (e) => {
+  const deleteReviewHandler = (productId, reviewId) => {
+        if (window.confirm("Are you sure to delete this data?")) {
+            dispatch(deleteProductReview(productId, reviewId));
+        }
+  };
+  
+ const uploadFileHandler = (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
     bodyFormData.append('image', file);
@@ -109,14 +138,14 @@ function ProductsScreen(props) {
   };
   return (
         <>
-            <div class="breadcrumb">
-                <div class="container">
-                    <a class="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
-                    <span class="breadcrumb-item active">Profile</span>
+            <div className="breadcrumb">
+                <div className="container">
+                    <a className="breadcrumb-item" href={process.env.PUBLIC_URL+"/"}>Home</a>
+                    <span className="breadcrumb-item active">Profile</span>
                 </div>
             </div>
-            <section class="static about-sec">
-                <div class="container">
+            <section className="static about-sec">
+                <div className="container">
                     <div className="row">
                         <div className="col-2">
                             <Sidebar activeMenu={'products'} />
@@ -237,6 +266,41 @@ function ProductsScreen(props) {
                       </form>
                     </div>
                 )}
+                {modalReviewVisible && (
+                    <>
+                    <h3>Reviews</h3>
+                    <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Rating</th>
+                        <th>Date</th>
+                        <th>Comment</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {reviews.map((review) => (
+                      <tr key={review._id}>
+                        <td>{review.name}</td>
+                        <td><Rating value={review.rating}></Rating></td>
+                        <td>{review.createdAt.substring(0, 10)}</td>
+                        <td>{review.comment}</td>
+                        <td>
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => deleteReviewHandler(id, review._id)}
+                            >
+                              Delete
+                            </button>
+                        </td>
+                      </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                    <hr />
+                    </>
+                )}
                 <div className="product-header">
                     <h2>Products</h2>
                     <button className="btn btn-primary btn-lg" onClick={() => openModal({})}>
@@ -247,7 +311,6 @@ function ProductsScreen(props) {
                   <table className="table table-striped">
                     <thead>
                       <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
@@ -258,12 +321,14 @@ function ProductsScreen(props) {
                     <tbody>
                       {products.map((product) => (
                         <tr key={product._id}>
-                          <td>{product._id}</td>
                           <td>{product.name}</td>
                           <td>{product.price}</td>
                           <td>{product.category}</td>
                           <td>{product.brand}</td>
                           <td>
+                            <button className="btn btn-success btn-sm" onClick={() => openReviewModal(product)}>
+                              Reviews
+                            </button>{' '}
                             <button className="btn btn-info btn-sm" onClick={() => openModal(product)}>
                               Edit
                             </button>{' '}

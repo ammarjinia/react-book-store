@@ -14,6 +14,8 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_RESET_REQUEST, USER_RESET_SUCCESS,
+  USER_RESET_FAIL
 } from "../constants/userConstants";
 
 const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
@@ -43,7 +45,15 @@ const signin = (email, password) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }
 }
-
+const resetUser = (email) => async (dispatch) => {
+  dispatch({ type: USER_RESET_REQUEST, payload: { email } });
+  try {
+    const { data } = await Axios.post("/api/users/resetuser", { email });
+    dispatch({ type: USER_RESET_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_RESET_FAIL, payload: error.response.data });
+  }
+}
 const register = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
   try {
@@ -120,4 +130,4 @@ const deleteUser = (userId) => async (dispatch, getState) => {
   }
 };
 
-export { signin, register, logout, update, listUsers, deleteUser, saveUser };
+export { resetUser, signin, register, logout, update, listUsers, deleteUser, saveUser };
