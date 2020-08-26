@@ -26,6 +26,28 @@ router.get('/', async (req, res) => {
   res.send(products);
 });
 
+router.get('/categories', async (req, res) => {
+  const category = req.query.category ? { category: req.query.category } : {};
+  const shopId = req.query.shopId ? { shopId: req.query.shopId } : {};
+  const searchKeyword = req.query.searchKeyword
+    ? {
+        name: {
+          $regex: req.query.searchKeyword,
+          $options: 'i',
+        },
+      }
+    : {};
+  const sortOrder = req.query.sortOrder
+    ? req.query.sortOrder === 'lowest'
+      ? { price: 1 }
+      : { price: -1 }
+    : { _id: -1 };
+  const categories = await Product.find({ ...category, ...searchKeyword, ...shopId }).sort(
+    sortOrder
+  ).distinct("category");
+  res.send(categories);
+});
+
 router.get('/:id', async (req, res) => {
   const product = await Product.findOne({ _id: req.params.id });
   if (product) {

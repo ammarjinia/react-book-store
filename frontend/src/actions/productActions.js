@@ -1,4 +1,7 @@
 import {
+  CATEGORY_LIST_REQUEST,
+  CATEGORY_LIST_SUCCESS,
+  CATEGORY_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
@@ -39,6 +42,28 @@ const listProducts = (
   }
 };
 
+const listCategories = (
+  category = '',
+  searchKeyword = '',
+  sortOrder = ''
+) => async (dispatch) => {
+  try {
+    dispatch({ type: CATEGORY_LIST_REQUEST });
+    const { data } = await axios.get(
+      '/api/products/categories?category=' +
+        category +
+        '&searchKeyword=' +
+        searchKeyword +
+        '&sortOrder=' +
+        sortOrder
+    );
+    dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: CATEGORY_LIST_FAIL, payload: error.message });
+  }
+};
+
+
 const shopProducts = (
   shopId = '',
   category = '',
@@ -65,7 +90,7 @@ const shopProducts = (
 const saveProduct = (product) => async (dispatch, getState) => {
   try {
       console.log("Product Saving...")
-   // dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
+    dispatch({ type: PRODUCT_SAVE_REQUEST });
     const {
       userSignin: { userInfo },
     } = getState();
@@ -163,6 +188,7 @@ const saveProductReview = (productId, review) => async (dispatch, getState) => {
 
 export {
   listProducts,
+  listCategories,
   shopProducts,
   detailsProduct,
   saveProduct,

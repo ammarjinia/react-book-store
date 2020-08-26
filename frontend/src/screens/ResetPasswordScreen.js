@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetUser } from '../actions/userActions';
 
@@ -9,7 +8,6 @@ function ResetPasswordScreen(props) {
   const userReset = useSelector(state => state.userReset);
   const { loading, success, error } = userReset;
   const dispatch = useDispatch();
-  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(resetUser(email));

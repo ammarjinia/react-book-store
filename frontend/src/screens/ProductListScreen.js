@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import { listProducts,listCategories } from '../actions/productActions';
 
 function ProductListScreen(props) {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categories } = categoryList;
 
   const dispatch = useDispatch();
 
@@ -22,10 +21,11 @@ function ProductListScreen(props) {
   useEffect(() => {
     setSearch(searchKeyword);
     dispatch(listProducts(category,searchKeyword));
+    dispatch(listCategories(category,searchKeyword));
     return () => {
       //
     };
-  }, []);
+  }, [category,searchKeyword]);
   
   return (
     <div>
@@ -49,8 +49,8 @@ function ProductListScreen(props) {
                                 <label>Category</label>
                                 <select id="category" name="category">
                                     <option value="">Select Category</option>
-                                    {products.map((product) => (
-                                        <option key={ product.category } value={ product.category } selected={(category == product.category) ? "selected" :""}>{ product.category }</option>
+                                    {categories.map((pcategory) => (
+                                        <option key={ pcategory } value={ pcategory } selected={(category === pcategory) ? "selected" :""}>{ pcategory }</option>
                                     ))}
                                 </select>
                             </div>    
@@ -66,7 +66,7 @@ function ProductListScreen(props) {
                     </form>
                     <h2>Search: {searchKeyword}</h2>
                     <div className="recent-book-sec">
-                        {products.length == 0 ? <h4 align='center'>No Products Found</h4> : (
+                        {products.length === 0 ? <h4 align='center'>No Products Found</h4> : (
                         <div className="row">
                         {products.map((product) => (
                         <div className="col-lg-2 col-md-3 col-sm-4" key={product._id}>

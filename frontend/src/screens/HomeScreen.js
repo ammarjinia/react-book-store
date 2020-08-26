@@ -1,33 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import Rating from '../components/Rating';
+import { listProducts, listCategories } from '../actions/productActions';
 
 function HomeScreen(props) {  
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
   const category = props.match.params.id ? props.match.params.id : '';
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categories } = categoryList;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listProducts(category));
-
+    dispatch(listCategories(category));
     return () => {
       //
     };
   }, [category]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(listProducts(category, searchKeyword, sortOrder));
-  };
-  const sortHandler = (e) => {
-    setSortOrder(e.target.value);
-    dispatch(listProducts(category, searchKeyword, sortOrder));
-  };
 
   return (
     <>
@@ -47,9 +37,8 @@ function HomeScreen(props) {
                                                 <label>Category</label><br />
                                                 <select id="category" name="category">
                                                     <option value="">Select Category</option>
-                                                    cont cat = [];
-                                                    {products.map((product) => (
-                                                        <option key={ product.category } value={ product.category }>{ product.category }</option>
+                                                    {categories.map((pcategory) => (
+                                                        <option key={ pcategory } value={ pcategory }>{ pcategory }</option>
                                                     ))}
                                                 </select>
                                             </div>    
@@ -81,9 +70,8 @@ function HomeScreen(props) {
                                                 <label>Category</label><br />
                                                 <select id="category" name="category">
                                                     <option value="">Select Category</option>
-                                                    cont cat = [];
-                                                    {products.map((product) => (
-                                                        <option key={ product.category } value={ product.category }>{ product.category }</option>
+                                                    {categories.map((pcategory) => (
+                                                        <option key={ pcategory } value={ pcategory }>{ pcategory }</option>
                                                     ))}
                                                 </select>
                                             </div>    

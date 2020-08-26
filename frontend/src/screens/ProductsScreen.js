@@ -28,7 +28,7 @@ function ProductsScreen(props) {
   const [reviews, setReviews] = useState('');
   const [uploading, setUploading] = useState(false);
   const shopList = useSelector((state) => state.shopList);
-  const { loadingshops, shops, errorshops } = shopList;
+  const { shops} = shopList;
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
   
@@ -41,16 +41,12 @@ function ProductsScreen(props) {
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
-    loading: loadingDelete,
-    success: successDelete,
-    error: errorDelete,
+    success: successDelete
   } = productDelete;
 
 const productReviewDelete = useSelector((state) => state.productReviewDelete);
   const {
-    loading: loadingReviewDelete,
     success: successReviewDelete,
-    error: errorReviewDelete,
     product:productReview
   } = productReviewDelete;
   const dispatch = useDispatch();
@@ -69,7 +65,7 @@ const productReviewDelete = useSelector((state) => state.productReviewDelete);
     return () => {
       //
     };
-  }, [successSave, successDelete]);
+  }, [successSave, successDelete, successReviewDelete,productReview]);
 
   const openModal = (product) => {
     setModalVisible(true);
@@ -301,6 +297,9 @@ const productReviewDelete = useSelector((state) => state.productReviewDelete);
                     <hr />
                     </>
                 )}
+    
+                    {loading && <div>Loading...</div>}
+                    {error && <div>{error} </div>}
                 <div className="product-header">
                     <h2>Products</h2>
                     <button className="btn btn-primary btn-lg" onClick={() => openModal({})}>

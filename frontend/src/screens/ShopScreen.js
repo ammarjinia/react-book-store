@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { listShops } from '../actions/shopActions';
 
 function ShopScreen(props) {  
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
   const category = props.match.params.id ? props.match.params.id : '';
   const shopList = useSelector((state) => state.shopList);
   const { shops, loading, error } = shopList;
@@ -19,14 +16,6 @@ function ShopScreen(props) {
     };
   }, [category]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(listShops(category, searchKeyword, sortOrder));
-  };
-  const sortHandler = (e) => {
-    setSortOrder(e.target.value);
-    dispatch(listShops(category, searchKeyword, sortOrder));
-  };
 
   return (
     <>

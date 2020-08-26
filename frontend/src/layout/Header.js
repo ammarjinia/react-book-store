@@ -1,27 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { listCategories } from '../actions/productActions';
 
 function Header(props) {
         const [activeMenu, setActiveMenu] = useState("/");
     
         const userSignin = useSelector((state) => state.userSignin);
         const { userInfo } = userSignin;
-        
-        const [search, setSearch] = useState('');
-        
-        const searchparam = window.location.search;
-        const params = new URLSearchParams(searchparam);
-        const searchKeyword = params.get('search');
-        
+        const categoryList = useSelector((state) => state.categoryList);
+        const { categories } = categoryList;
+        const [count, setCount] = useState(0);
+        const dispatch = useDispatch();
+    
         useEffect(() => {
-            setSearch(searchKeyword);
-            return () => {
-              //
-            };
-        }, [searchKeyword]);
-        
+          dispatch(listCategories());
+          return () => {
+            //
+          };
+        }, []);
+
+
+
         return (  
             <div>
                 <header>
@@ -44,26 +44,25 @@ function Header(props) {
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav ml-auto">
                                         <li className="navbar-item">
-                                            <Link to={process.env.PUBLIC_URL+"/"} className={activeMenu == '/' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("/")}>Home</Link>
+                                            <Link to={process.env.PUBLIC_URL+"/"} className={activeMenu === '/' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("/")}>Home</Link>
                                         </li>
                                         <li className="navbar-item">
-                                            <Link to={process.env.PUBLIC_URL+"/shop"} className={activeMenu == 'Shop' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("Shop")}>Shop <span className="caret"></span></Link>
+                                            <Link to={process.env.PUBLIC_URL+"/shop"} className={activeMenu === 'Shop' ? 'active' : 'nav-link'} onClick={(e) => setActiveMenu("Shop")}>Shop <span className="caret"></span></Link>
                                             <ul className="navbar-subnav">
-                                                <li className="navbar-subitem">
-                                                    <Link to="/category/Engineering">Engineering</Link>
-                                                </li>
-                                                <li className="navbar-subitem">
-                                                    <Link to="/category/Biography">Biography</Link>
-                                                </li>
+                                                {categories.slice(0, 5).map((pcategory) => (
+                                                        <li className="navbar-subitem">
+                                                            <Link to={process.env.PUBLIC_URL+"/category/"+pcategory }>{pcategory}</Link>
+                                                        </li>
+                                                ))}
                                             </ul>
                                         </li>
                                         <li className="navbar-item">
-                                            <Link to={process.env.PUBLIC_URL+"/aboutus"} className={activeMenu == 'aboutus' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("aboutus")}>About</Link>
+                                            <Link to={process.env.PUBLIC_URL+"/aboutus"} className={activeMenu === 'aboutus' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("aboutus")}>About</Link>
                                         </li>
                                         <li className="navbar-item">
                                             {userInfo ? (
                                               <>
-                                              <Link to={process.env.PUBLIC_URL+"/profile"}  className={activeMenu == 'profile' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("profile")}>{userInfo.name}</Link>
+                                              <Link to={process.env.PUBLIC_URL+"/profile"}  className={activeMenu === 'profile' ? 'active' : 'nav-link'}  onClick={(e) => setActiveMenu("profile")}>{userInfo.name}</Link>
                                       {/*<ul>
                                                 <li>
                                                     <Link to={process.env.PUBLIC_URL+"/products"}>Products</Link>

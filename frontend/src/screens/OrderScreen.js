@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
-import PaypalButton from '../components/PaypalButton';
+import { detailsOrder } from '../actions/orderActions';
 function OrderScreen(props) {
 
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
   
   const orderPay = useSelector(state => state.orderPay);
-  const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
+  const { loading: loadingPay, success: successPay } = orderPay;
   const dispatch = useDispatch();
   useEffect(() => {
     if (successPay) {
@@ -21,9 +20,6 @@ function OrderScreen(props) {
     };
   }, [successPay]);
 
-  const handleSuccessPayment = (paymentResult) => {
-    dispatch(payOrder(order, paymentResult));
-  }
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { loading, order, error } = orderDetails;
@@ -111,11 +107,6 @@ function OrderScreen(props) {
           <ul>
             <li className="placeorder-actions-payment">
               {loadingPay && <div>Finishing Payment...</div>}
-              {!order.isPaid &&
-                <PaypalButton
-                  amount={order.totalPrice}
-                  onSuccess={handleSuccessPayment} />
-              }
             </li>
             <li>
               <h3>Order Summary</h3>

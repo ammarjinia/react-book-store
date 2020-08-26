@@ -19,7 +19,7 @@ function ShopsScreen(props) {
   const [phone, setPhone] = useState('');
   const [uploading, setUploading] = useState(false);
   const shopList = useSelector((state) => state.shopList);
-  const { loading, shops, error } = shopList;
+  const { shops } = shopList;
 
   const shopSave = useSelector((state) => state.shopSave);
   const {
@@ -30,9 +30,7 @@ function ShopsScreen(props) {
 
   const shopDelete = useSelector((state) => state.shopDelete);
   const {
-    loading: loadingDelete,
-    success: successDelete,
-    error: errorDelete,
+    success: successDelete
   } = shopDelete;
   const dispatch = useDispatch();
 

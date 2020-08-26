@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { logout, update } from '../actions/userActions';
-import { listMyOrders } from '../actions/orderActions';
+import { update } from '../actions/userActions';
 import Sidebar from '../layout/Sidebar'; 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,15 +19,12 @@ function ProfileScreen(props) {
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;
 
-  const myOrderList = useSelector(state => state.myOrderList);
-  const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
   useEffect(() => {
     if (userInfo) {
       setEmail(userInfo.email);
       setName(userInfo.name);
       setPassword(userInfo.password);
     }
-    dispatch(listMyOrders());
     return () => {
 
     };

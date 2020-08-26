@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsShop } from '../actions/shopActions';
-import { shopProducts } from '../actions/productActions';
+import { shopProducts,listCategories } from '../actions/productActions';
 
 function ShopDetailScreen(props) {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  
   const shopDetails = useSelector((state) => state.shopDetails);
   const { shops, loading, error } = shopDetails;
   
   const shpProducts = useSelector((state) => state.shpProducts);
-  const { products, loadingShpProducts, errorShpProducts } = shpProducts;
+  const { products } = shpProducts;
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categories } = categoryList;
 
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('');
@@ -26,14 +25,14 @@ function ShopDetailScreen(props) {
   useEffect(() => {
     dispatch(detailsShop(props.match.params.id));
     dispatch(shopProducts(props.match.params.id,category,searchKeyword));
+    dispatch(listCategories(category,searchKeyword));
     return () => {
       //
     };
   }, []);
   
   const sortHandler = (e) => {
-    setSortOrder(e.target.value);
-    dispatch(shopProducts(props.match.params.id,category,searchKeyword, sortOrder));
+    dispatch(shopProducts(props.match.params.id,category,searchKeyword, e.target.value));
   };
   
   return (
@@ -59,9 +58,8 @@ function ShopDetailScreen(props) {
                                 <label>Category</label>
                                 <select id="category" name="category">
                                     <option value="">Select Category</option>
-                                    cont cat = [];
-                                    {products.map((product) => (
-                                        <option key={ product.category } value={ product.category } selected={(category == product.category) ? "selected" :""}>{ product.category }</option>
+                                    {categories.map((pcategory) => (
+                                        <option key={ pcategory } value={ pcategory } selected={(category === pcategory) ? "selected" :""}>{ pcategory }</option>
                                     ))}
                                 </select>
                             </div>    
@@ -88,7 +86,7 @@ function ShopDetailScreen(props) {
                     </h2>
                     <hr />
                     <div className="recent-book-sec">
-                        {products.length == 0 ? <h4 align='center'>No Products Found</h4> : (
+                        {products.length === 0 ? <h4 align='center'>No Products Found</h4> : (
                         <div className="row">
                         {products.map((product) => (
                         <div className="col-lg-2 col-md-3 col-sm-4" key={product._id}>

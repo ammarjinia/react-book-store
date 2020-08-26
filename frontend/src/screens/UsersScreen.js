@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import Sidebar from '../layout/Sidebar'; 
 import {
   saveUser,
@@ -17,7 +16,7 @@ function UsersScreen(props) {
   const [isAdmin, setIsAdmin] = useState('');
   
   const userList = useSelector((state) => state.userList);
-  const { loading, users, error } = userList;
+  const { users } = userList;
 
   const userSave = useSelector((state) => state.userSave);
   const {
@@ -28,9 +27,7 @@ function UsersScreen(props) {
 
   const userDelete = useSelector((state) => state.userDelete);
   const {
-    loading: loadingDelete,
-    success: successDelete,
-    error: errorDelete,
+    success: successDelete
   } = userDelete;
   const dispatch = useDispatch();
 
@@ -134,8 +131,8 @@ function UsersScreen(props) {
                               id="isAdmin"
                               onChange={(e) => setIsAdmin(e.target.value)}
                             >
-                                <option value="true" selected={(isAdmin == true) ? "selected" :""}>Yes</option>
-                                <option value="false" selected={(isAdmin == false) ? "selected" :""}>No</option>
+                                <option value="true" selected={(isAdmin === true) ? "selected" :""}>Yes</option>
+                                <option value="false" selected={(isAdmin === false) ? "selected" :""}>No</option>
                             </select>
                           </li>
                           <li>

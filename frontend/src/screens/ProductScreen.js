@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, saveProductReview } from '../actions/productActions';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
-import { detailsShop } from '../actions/shopActions';
+//import { detailsShop } from '../actions/shopActions';
 
 function ProductScreen(props) {
   const [qty, setQty] = useState(1);
@@ -17,8 +17,8 @@ function ProductScreen(props) {
   const productReviewSave = useSelector((state) => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
   
-  const shopDetails = useSelector((state) => state.shopDetails);
-  const { shops, loadingshopDetails, errorshopDetails } = shopDetails;
+//  const shopDetails = useSelector((state) => state.shopDetails);
+//  const { shops, loadingshopDetails, errorshopDetails } = shopDetails;
   
   const dispatch = useDispatch();
 

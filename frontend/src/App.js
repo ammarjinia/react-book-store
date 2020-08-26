@@ -9,7 +9,6 @@ import ShopDetailScreen from './screens/ShopDetailScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
-import { useSelector } from 'react-redux';
 import RegisterScreen from './screens/RegisterScreen';
 import ProductsScreen from './screens/ProductsScreen';
 import ShippingScreen from './screens/ShippingScreen';
@@ -27,12 +26,7 @@ import ResetPasswordScreen from './screens/ResetPasswordScreen';
 
 
 function App() {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
 
-  const openMenu = () => {
-    document.querySelector('.sidebar').classList.add('open');
-  };
   const closeMenu = () => {
     document.querySelector('.sidebar').classList.remove('open');
   };

@@ -39,7 +39,7 @@ const listShops = (
 const saveShop = (shop) => async (dispatch, getState) => {
   try {
       console.log("Shop Saving...")
-   // dispatch({ type: SHOP_SAVE_REQUEST, payload: product });
+    dispatch({ type: SHOP_SAVE_REQUEST});
     const {
       userSignin: { userInfo },
     } = getState();
