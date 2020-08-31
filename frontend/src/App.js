@@ -23,7 +23,7 @@ import MyOrdersScreen from './screens/MyOrdersScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import AboutScreen from './screens/AboutScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-import NotFound from './screens/NotFound';
+import NotFoundScreen from './screens/NotFoundScreen';
 
 function App() {
 
@@ -55,7 +55,7 @@ function App() {
         <Route path="/users" component={UsersScreen} />
         <Route path="/aboutus" component={AboutScreen} />
         <Route path="/" exact={true} component={HomeScreen} />
-        <Route path="*" component={NotFound} />
+        <Route path="*" component={NotFoundScreen} />
         </Switch>
         <Footer />
     </BrowserRouter>
