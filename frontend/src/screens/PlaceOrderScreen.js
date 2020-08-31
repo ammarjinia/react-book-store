@@ -76,7 +76,7 @@ function PlaceOrderScreen(props) {
                 cartItems.map(item =>
                   <li>
                     <div className="cart-image">
-                      <img src={process.env.PUBLIC_URL+"/assets/images/Mechanical_Engineering.jpg"} alt="product" className="img-fluid" />
+                      <img src={item.image} alt="Image" className="img-fluid" />
                     </div>
                     <div className="cart-name">
                       <div>

@@ -49,8 +49,7 @@ function ShippingScreen(props) {
             <label htmlFor="postalCode">
               Postal Code
           </label>
-            <input type="text" name="postalCode" id="postalCode" onChange={(e) => setPostalCode(e.target.value)}>
-            </input>
+            <input type="text" name="postalCode" id="postalCode" maxLength='6' pattern="[0-9]*" value={postalCode} onChange={(e) => setPostalCode(e.target.value.replace(/\D/,''))} />
           </li>
           <li>
             <label htmlFor="country">

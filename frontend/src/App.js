@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import Header from './layout/Header';  
 import Footer from './layout/Footer';
@@ -23,7 +23,7 @@ import MyOrdersScreen from './screens/MyOrdersScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import AboutScreen from './screens/AboutScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-
+import NotFound from './screens/NotFound';
 
 function App() {
 
@@ -33,21 +33,7 @@ function App() {
   return (
     <BrowserRouter>
         <Header />
-        <aside className="sidebar">
-          <h3>Shopping Categories</h3>
-          <button className="sidebar-close-button" onClick={closeMenu}>
-            x
-          </button>
-          <ul className="categories">
-            <li>
-              <Link to="/category/Pants">Pants</Link>
-            </li>
-
-            <li>
-              <Link to="/category/Shirts">Shirts</Link>
-            </li>
-          </ul>
-        </aside>
+        <Switch>
         <Route path="/shop" component={ShopScreen} />
         <Route path="/shopbooks/:id" component={ShopDetailScreen} />
         <Route path="/orders" component={OrdersScreen} />
@@ -69,6 +55,8 @@ function App() {
         <Route path="/users" component={UsersScreen} />
         <Route path="/aboutus" component={AboutScreen} />
         <Route path="/" exact={true} component={HomeScreen} />
+        <Route path="*" component={NotFound} />
+        </Switch>
         <Footer />
     </BrowserRouter>
   );

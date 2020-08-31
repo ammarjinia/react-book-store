@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
@@ -7,6 +7,10 @@ function PaymentScreen(props) {
   const [paymentMethod, setPaymentMethod] = useState('');
 
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+      setPaymentMethod("cod")
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -29,7 +33,7 @@ function PaymentScreen(props) {
 
             <li>
               <div>
-                <input type="radio" name="paymentMethod" id="paymentMethod" value="cod" onChange={(e) => setPaymentMethod(e.target.value)} />{' '}
+                <input type="radio" name="paymentMethod" id="paymentMethod" value="cod" checked="checked" onChange={(e) => setPaymentMethod(e.target.value)} />{' '}
                 <label for="paymentMethod">Cash On Delivery</label>
               </div>
             </li>
