@@ -14,7 +14,6 @@ function ShopDetailScreen(props) {
   const { categories } = categoryList;
 
   const [search, setSearch] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
   
   let lsearch = window.location.search;
   let params = new URLSearchParams(lsearch);
@@ -29,7 +28,7 @@ function ShopDetailScreen(props) {
     return () => {
       //
     };
-  }, []);
+  }, [dispatch, props, category, searchKeyword]);
   
   const sortHandler = (e) => {
     dispatch(shopProducts(props.match.params.id,category,searchKeyword, e.target.value));

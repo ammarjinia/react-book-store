@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Header from './layout/Header';  
 import Footer from './layout/Footer';
@@ -27,9 +27,6 @@ import NotFoundScreen from './screens/NotFoundScreen';
 
 function App() {
 
-  const closeMenu = () => {
-    document.querySelector('.sidebar').classList.remove('open');
-  };
   return (
     <BrowserRouter>
         <Header />

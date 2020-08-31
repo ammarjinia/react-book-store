@@ -25,7 +25,7 @@ function ProductListScreen(props) {
     return () => {
       //
     };
-  }, [category,searchKeyword]);
+  }, [category,searchKeyword,dispatch]);
   
   return (
     <div>

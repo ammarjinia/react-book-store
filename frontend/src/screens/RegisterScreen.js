@@ -8,7 +8,6 @@ function RegisterScreen(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ function RegisterScreen(props) {
     return () => {
       //
     };
-  }, [userInfo]);
+  }, [userInfo, props, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,7 +69,7 @@ function RegisterScreen(props) {
         </li>
         <li>
           <label htmlFor="rePassword">Re-Enter Password</label>
-          <input type="password" id="rePassword" name="rePassword" onChange={(e) => setRePassword(e.target.value)}>
+          <input type="password" id="rePassword" name="rePassword" >
           </input>
         </li>
         <li>

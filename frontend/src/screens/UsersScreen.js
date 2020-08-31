@@ -39,7 +39,7 @@ function UsersScreen(props) {
     return () => {
       //
     };
-  }, [successSave, successDelete]);
+  }, [successSave, successDelete, dispatch]);
 
   const openModal = (user) => {
     setModalVisible(true);

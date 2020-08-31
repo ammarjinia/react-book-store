@@ -14,7 +14,7 @@ function ShopScreen(props) {
     return () => {
       //
     };
-  }, [category]);
+  }, [category, dispatch]);
 
 
   return (

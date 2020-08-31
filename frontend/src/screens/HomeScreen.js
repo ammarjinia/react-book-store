@@ -16,7 +16,7 @@ function HomeScreen(props) {
     return () => {
       //
     };
-  }, [category]);
+  }, [category,dispatch]);
 
 
   return (

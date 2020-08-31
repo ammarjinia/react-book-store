@@ -8,8 +8,8 @@ function OrdersScreen(props) {
   const orderList = useSelector(state => state.orderList);
   const { loading, orders } = orderList;
 
-  const orderDelete = useSelector(state => state.orderDelete);
-  const {  success: successDelete} = orderDelete;
+  //const orderDelete = useSelector(state => state.orderDelete);
+ // const {  success: successDelete} = orderDelete;
 
   const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ function OrdersScreen(props) {
     return () => {
       //
     };
-  }, [successDelete]);
+  }, [dispatch]);
 
   const deleteHandler = (order) => {
     dispatch(deleteOrder(order._id));

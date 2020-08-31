@@ -65,7 +65,7 @@ const productReviewDelete = useSelector((state) => state.productReviewDelete);
     return () => {
       //
     };
-  }, [successSave, successDelete, successReviewDelete,productReview]);
+  }, [successSave, successDelete, successReviewDelete,productReview, dispatch]);
 
   const openModal = (product) => {
     setModalVisible(true);

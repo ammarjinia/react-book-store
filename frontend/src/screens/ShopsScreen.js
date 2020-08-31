@@ -42,7 +42,7 @@ function ShopsScreen(props) {
     return () => {
       //
     };
-  }, [successSave, successDelete]);
+  }, [successSave, successDelete, dispatch]);
 
   const openModal = (shop) => {
     setModalVisible(true);

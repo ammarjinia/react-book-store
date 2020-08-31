@@ -18,7 +18,7 @@ function SigninScreen(props) {
     return () => {
       //
     };
-  }, [userInfo]);
+  }, [userInfo, props, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

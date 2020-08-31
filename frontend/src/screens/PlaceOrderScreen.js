@@ -34,7 +34,7 @@ function PlaceOrderScreen(props) {
       props.history.push("/order/" + order._id);
     }
 
-  }, [success]);
+  }, [success, props, order]);
 
   return (
             <section className="product-sec">
@@ -76,7 +76,7 @@ function PlaceOrderScreen(props) {
                 cartItems.map(item =>
                   <li>
                     <div className="cart-image">
-                      <img src={item.image} alt="Image" className="img-fluid" />
+                      <img src={item.image} alt="" className="img-fluid" />
                     </div>
                     <div className="cart-name">
                       <div>

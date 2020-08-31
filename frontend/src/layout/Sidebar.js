@@ -22,7 +22,7 @@ function Sidebar(props) {
             return () => {
 
             };
-          }, [])
+          }, [props])
         
         return (  
             <ul className="list-group">

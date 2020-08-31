@@ -18,7 +18,7 @@ function OrderScreen(props) {
     }
     return () => {
     };
-  }, [successPay]);
+  }, [successPay, props, dispatch]);
 
 
   const orderDetails = useSelector(state => state.orderDetails);

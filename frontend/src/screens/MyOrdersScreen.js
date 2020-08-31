@@ -7,19 +7,14 @@ import Sidebar from '../layout/Sidebar';
 function MyOrdersScreen(props) {
   const dispatch = useDispatch();
 
-  const userSignin = useSelector(state => state.userSignin);
-  const { userInfo } = userSignin;
-
   const myOrderList = useSelector(state => state.myOrderList);
   const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
   useEffect(() => {
-    if (userInfo) {
-    }
     dispatch(listMyOrders());
     return () => {
 
     };
-  }, [userInfo])
+  }, [dispatch])
 
   return (
     <>

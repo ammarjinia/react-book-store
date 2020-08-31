@@ -10,7 +10,6 @@ function Header(props) {
         const { userInfo } = userSignin;
         const categoryList = useSelector((state) => state.categoryList);
         const { categories } = categoryList;
-        const [count, setCount] = useState(0);
         const dispatch = useDispatch();
     
         useEffect(() => {
@@ -18,7 +17,7 @@ function Header(props) {
           return () => {
             //
           };
-        }, []);
+        }, [dispatch]);
 
 
 
