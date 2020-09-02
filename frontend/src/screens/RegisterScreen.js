@@ -9,18 +9,24 @@ function RegisterScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userRegister = useSelector(state => state.userRegister);
-  const { loading, userInfo, error } = userRegister;
+  const { loading, success, error } = userRegister;
+  
+  const userSignin = useSelector(state => state.userSignin);
+  const { userInfo } = userSignin;
   const dispatch = useDispatch();
 
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   useEffect(() => {
     if (userInfo) {
-      props.history.push(redirect);
+       props.history.push(props.location.search);
+    }
+    if (success) {
+       document.getElementById("frmRegister").reset(); 
     }
     return () => {
       //
     };
-  }, [userInfo, props, redirect]);
+  }, [userInfo, props, redirect, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -39,14 +45,15 @@ function RegisterScreen(props) {
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">
-    <form onSubmit={submitHandler} >
+    <form id="frmRegister" onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
           <h2>Create Account</h2>
         </li>
         <li>
           {loading && <div>Loading...</div>}
-          {error && <div>{error}</div>}
+          {error && <div className="alert alert-danger">{error.message}</div>}
+          {success && <div className="alert alert-info">A verification link has been sent to your email account</div>}
         </li>
         <li>
           <label htmlFor="name">

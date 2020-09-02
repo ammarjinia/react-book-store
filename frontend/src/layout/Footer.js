@@ -7,11 +7,6 @@ class Footer extends Component {
                 <footer>
                     <div className="copy-right">
                         <div className="container">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h5>Copyright &copy; 2020 All Rights Reserved.</h5>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </footer>

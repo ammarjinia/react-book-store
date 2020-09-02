@@ -25,13 +25,6 @@ function Header(props) {
             <div>
                 <header>
                     <div className="header-top">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <span className="ph-number">Call : 990 123 5678</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div className="main-menu">
                         <div className="container">

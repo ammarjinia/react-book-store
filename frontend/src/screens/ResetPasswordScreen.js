@@ -36,8 +36,8 @@ function ResetPasswordScreen(props) {
         </li>
         <li>
           {loading && <div>Loading...</div>}
-          {error && <div className="text-danger">{error.message}</div>}
-          {success && <div className="text-success">Check your email for a link to reset your password.</div>}    
+          {error && <div className="alert alert-danger">{error.message}</div>}
+          {success && <div className="alert alert-success">Check your email for a link to reset your password.</div>}    
         </li>
         <li>
           <label htmlFor="email">

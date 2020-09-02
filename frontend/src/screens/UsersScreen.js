@@ -14,6 +14,7 @@ function UsersScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
+  const [isVerified, setIsVerified] = useState('');
   
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
@@ -48,6 +49,7 @@ function UsersScreen(props) {
     setEmail(user.email || "");
     setPassword(user.password || "");
     setIsAdmin(user.isAdmin || "");
+    setIsVerified(user.isVerified || "");
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -58,6 +60,7 @@ function UsersScreen(props) {
         email,
         password,
         isAdmin,
+        isVerified,
       })
     );
   };
@@ -125,14 +128,25 @@ function UsersScreen(props) {
                             ></input>
                           </li>
                           <li>
-                            <label htmlFor="email">Is Admin{isAdmin}</label>
+                            <label htmlFor="isVerified">Is Verified</label>
+                            <select 
+                              name="isVerified"
+                              id="isVerified"
+                              onChange={(e) => setIsVerified(e.target.value)}
+                            >
+                                <option value="true" selected={(isVerified) ? "selected" :""}>Yes </option>
+                                <option value="false" selected={(!isVerified) ? "selected" :""}>No</option>
+                            </select>
+                          </li>
+                          <li>
+                            <label htmlFor="email">Is Admin</label>
                             <select 
                               name="isAdmin"
                               id="isAdmin"
                               onChange={(e) => setIsAdmin(e.target.value)}
                             >
-                                <option value="true" selected={(isAdmin === true) ? "selected" :""}>Yes</option>
-                                <option value="false" selected={(isAdmin === false) ? "selected" :""}>No</option>
+                                <option value="true" selected={(isAdmin) ? "selected" :""}>Yes</option>
+                                <option value="false" selected={(!isAdmin) ? "selected" :""}>No</option>
                             </select>
                           </li>
                           <li>

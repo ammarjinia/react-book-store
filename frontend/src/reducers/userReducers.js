@@ -55,12 +55,13 @@ function userRegisterReducer(state = {}, action) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, success: action.payload };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
     default: return state;
   }
 }
+
 function userListReducer(state = { users: [] }, action) {
   switch (action.type) {
     case USER_LIST_REQUEST:
