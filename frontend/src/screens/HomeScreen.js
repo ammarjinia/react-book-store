@@ -10,6 +10,8 @@ function HomeScreen(props) {
   const categoryList = useSelector((state) => state.categoryList);
   const { categories } = categoryList;
   const dispatch = useDispatch();
+  const userSignin = useSelector((state) => state.userSignin);
+        const { userInfo } = userSignin;
   useEffect(() => {
     dispatch(listProducts(category));
     dispatch(listCategories(category));
@@ -110,7 +112,9 @@ function HomeScreen(props) {
                             <div className="item">
                                 <Link to={'/product/' + product._id}><img src={product.image} alt="" /></Link>
                                 <h3>{ product.name }</h3>
-                                <h6><span className="price">Rs{product.price}</span> / <a href={'/product/' + product._id}>Buy Now</a></h6>
+                                <h6><span className="price">Rs{product.price}</span>
+                                {(userInfo.isAdmin) ? '' : (<Link to={'/product/' + product._id}>Buy Now</Link>)}
+                                </h6>
                                 <div className="hover">
                                     <Link to={'/product/' + product._id}>
                                     <span><i className="fa fa-long-arrow-right" aria-hidden="true"></i></span>
@@ -147,7 +151,9 @@ function HomeScreen(props) {
                             <div className="item">
                                 <Link to={'/product/' + product._id}><img src={product.image} alt="" height="260px" /></Link>
                                 <h3><Link to={'/product/' + product._id}>{ product.name }</Link></h3>
-                                <h6><span className="price">Rs{product.price}</span> / <Link to={'/product/' + product._id}>Buy Now</Link></h6>
+                                <h6><span className="price">Rs{product.price}</span>
+                                {(userInfo.isAdmin) ? '' : (<Link to={'/product/' + product._id}>Buy Now</Link>)}
+                                      </h6>
                             </div>
                         </div>
                         ))}

@@ -82,14 +82,21 @@ function ProductScreen(props) {
                         </div>
                     </div>
                     <div className="col-md-6 slider-content">
-                        <p>{product.description}</p>
                         <p><Rating value={product.rating} text={'('+product.numReviews + ' reviews)'} /></p>
                         <ul>
+                            <li>
+                                <span className="name">Category:{' '}</span>
+                                <span>{product.category}</span>
+                            </li>
+                            <li>
+                                <span className="name">Brand:{' '}</span>
+                                <span>{product.brand}</span>
+                            </li>
                             <li>
                                 <span className="name">Status:{' '}</span>
                                 <span>{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</span>
                             </li>
-                            <li>
+                            <li className="pt-2 pb-3">
                                 <span className="name">Price:</span>
                                 <span className="price final">Rs{product.price}</span>
                             </li>
@@ -101,10 +108,11 @@ function ProductScreen(props) {
                             </li>
                         </ul>
                         <div className="btn-sec">
-                            {product.countInStock > 0 && (
+                            {(product.countInStock > 0 && !userInfo.isAdmin)  && (
                                 <button onClick={handleAddToCart} className="btn btn-primary btn-lg">Add To cart</button>
                             )}
                         </div>
+                        <p className="mt-5">{product.description}</p>
                     </div>
                 </div>
             </div>

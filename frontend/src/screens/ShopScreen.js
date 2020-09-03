@@ -39,7 +39,7 @@ function ShopScreen(props) {
                             {shops.map((shop) => (
                             <div className="col-lg-2 col-md-3 col-sm-4" key={shop._id}>
                                 <div className="item">
-                                    <Link to={'/shopbooks/' + shop._id}><img src={shop.image} alt="" /></Link>
+                                    <Link to={'/shopbooks/' + shop._id}><img src={shop.image} alt="" height="260px" /></Link>
                                     <h3><Link to={'/shopbooks/' + shop._id}>{ shop.name }</Link></h3>
                                 </div>
                             </div>

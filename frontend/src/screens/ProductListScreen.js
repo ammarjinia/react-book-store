@@ -18,6 +18,9 @@ function ProductListScreen(props) {
   let searchKeyword = (params.get('search')) ? params.get('search') : '';
   let category = (props.match.params.id) ? props.match.params.id : (params.get('category')) ? params.get('category') : '';
   
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  
   useEffect(() => {
     setSearch(searchKeyword);
     dispatch(listProducts(category,searchKeyword));
@@ -73,7 +76,9 @@ function ProductListScreen(props) {
                             <div className="item">
                                 <Link to={'/product/' + product._id}><img src={product.image} alt="" height="260px" /></Link>
                                 <h3><Link to={'/product/' + product._id}>{ product.name }</Link></h3>
-                                <h6><span className="price">Rs{product.price}</span> / <a href={'/product/' + product._id}>Buy Now</a></h6>
+                                <h6><span className="price">Rs{product.price}</span>
+                                {(userInfo.isAdmin) ? '' : (<Link to={'/product/' + product._id}>Buy Now</Link>)}
+                                      </h6>
                             </div>
                         </div>
                         ))}
