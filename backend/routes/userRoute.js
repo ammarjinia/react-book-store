@@ -1,6 +1,6 @@
 import express from 'express';
 import User from '../models/userModel';
-import { getToken, isAuth } from '../util';
+import { getToken, isAuth, isAdmin } from '../util';
 
 const router = express.Router();
 
@@ -117,5 +117,16 @@ router.get('/', async (req, res) => {
   );
   res.send(users);
 });
+
+router.delete('/:id', isAuth, isAdmin, async (req, res) => {
+  const deletedUser = await User.findById(req.params.id);
+  if (deletedUser) {
+    await deletedUser.remove();
+    res.send({ message: 'User Deleted' });
+  } else {
+    res.send('Error in Deletion.');
+  }
+});
+
 
 export default router;
