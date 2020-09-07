@@ -10,8 +10,6 @@ function HomeScreen(props) {
   const categoryList = useSelector((state) => state.categoryList);
   const { categories } = categoryList;
   const dispatch = useDispatch();
-  const userSignin = useSelector((state) => state.userSignin);
-        const { userInfo } = userSignin;
   useEffect(() => {
     dispatch(listProducts(category));
     dispatch(listCategories(category));
@@ -33,7 +31,7 @@ function HomeScreen(props) {
                                 <div className="title">
                                     <h3>welcome to bookstore</h3>
                                     <h5>Discover the best books online with us</h5>
-                            {/*<form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                                    <form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
                                         <div className="row">
                                             <div className="col-2 offset-4 text-left">
                                                 <label>Category</label><br />
@@ -53,7 +51,7 @@ function HomeScreen(props) {
                                                 <button type="submit" className="btn btn-primary">Search</button>
                                             </div>    
                                         </div>    
-                                    </form>*/}
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +64,7 @@ function HomeScreen(props) {
                                     <h3>welcome to bookstore</h3>
                                     <h5>Discover the best books online with us</h5>
                                     
-    {/*<form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
+                                    <form className="form m-0" action={process.env.PUBLIC_URL+"/productlist"}>
                                         <div className="row">
                                             <div className="col-2 offset-4 text-left">
                                                 <label>Category</label><br />
@@ -86,7 +84,7 @@ function HomeScreen(props) {
                                                 <button type="submit" className="btn btn-primary">Search</button>
                                             </div>    
                                         </div>    
-                                    </form>*/}
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -110,14 +108,11 @@ function HomeScreen(props) {
                         {products.map((product) => (
                         <div className="col-lg-3 col-md-6" key={product._id}>
                             <div className="item">
-                            {/*<Link to={'/product/' + product._id}><img src={product.image} alt="" /></Link>*/}
-                                <Link to='javascript:void(0)'><img src={product.image} alt="" /></Link>
+                                <Link to={'/product/' + product._id}><img src={product.image} alt="" /></Link>
                                 <h3>{ product.name }</h3>
-                                <h6><span className="price">Rs{product.price}</span>
-                                {(userInfo.isAdmin) ? '' : (<Link to='javascript:void(0);'>Buy Now</Link>)}
-                                </h6>
+                                <h6><span className="price">Rs{product.price}</span> / <a href={'/product/' + product._id}>Buy Now</a></h6>
                                 <div className="hover">
-                                    <Link to='javascript:void(0);' /*{'/product/' + product._id}*/>
+                                    <Link to={'/product/' + product._id}>
                                     <span><i className="fa fa-long-arrow-right" aria-hidden="true"></i></span>
                                     </Link>
                                 </div>
@@ -136,7 +131,7 @@ function HomeScreen(props) {
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and Scrambled it to make a type and typesetting industry. Lorem Ipsum has been the book. </p>
                     <p>It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and</p>
                     <div className="btn-sec">
-                    {/*<Link to={process.env.PUBLIC_URL+"/shop"}  className="btn btn-primary">Shop Books</Link>*/}
+                        <Link to={process.env.PUBLIC_URL+"/shop"}  className="btn btn-primary">Shop Books</Link>
                     </div>
                 </div>
             </section>
@@ -150,12 +145,9 @@ function HomeScreen(props) {
                         {products.map((product) => (
                         <div className="col-lg-2 col-md-3 col-sm-4" key={product._id}>
                             <div className="item">
-                            {/*<Link to={'/product/' + product._id}><img src={product.image} alt="" height="260px" /></Link>*/}
-                    <Link to='javascript:void(0)'><img src={product.image} alt="" height="260px" /></Link>
-                                <h3><Link to='javascript:void(0)'>{ product.name }</Link></h3>
-                                <h6><span className="price">Rs{product.price}</span>
-                                {(userInfo.isAdmin) ? '' : (<Link to='javascript:void(0)'>Buy Now</Link>)}
-                                      </h6>
+                                <Link to={'/product/' + product._id}><img src={product.image} alt="" height="260px" /></Link>
+                                <h3><Link to={'/product/' + product._id}>{ product.name }</Link></h3>
+                                <h6><span className="price">Rs{product.price}</span> / <Link to={'/product/' + product._id}>Buy Now</Link></h6>
                             </div>
                         </div>
                         ))}
