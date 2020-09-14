@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { register } from '../actions/userActions';
+import { registeract } from '../actions/userActions';
+import { useForm } from "react-hook-form";
 
 function RegisterScreen(props) {
-
+    const { register, handleSubmit, errors, watch, getValues  } = useForm();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,8 +30,7 @@ function RegisterScreen(props) {
   }, [userInfo, props, redirect, success]);
 
   const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(register(name, email, password));
+    dispatch(registeract(name, email, password));
   }
   return (
         <>
@@ -45,7 +45,7 @@ function RegisterScreen(props) {
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">
-    <form id="frmRegister" onSubmit={submitHandler} >
+    <form onSubmit={handleSubmit(submitHandler)}>
       <ul className="form-container">
         <li>
           <h2>Create Account</h2>
@@ -59,25 +59,52 @@ function RegisterScreen(props) {
           <label htmlFor="name">
             Name
           </label>
-          <input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)}>
+          <input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)} ref={register({
+                required: "This field is required"})}>
           </input>
+          {/* errors will return when field validation fails  */}
+          <span className="text-danger">{errors.name?.message}</span>
         </li>
         <li>
           <label htmlFor="email">
             Email
           </label>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
+          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} ref={register({
+                required: "This field is required",
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+                  message: "Please enter valid email address"
+                }
+              })}>
           </input>
+          {/* errors will return when field validation fails  */}
+          <span className="text-danger">{errors.email?.message}</span>
         </li>
         <li>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
+          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} ref={register({
+          required: "This field is required",
+          minLength: {
+            value: 6,
+            message: "min length is 6"
+          }
+        })}>
           </input>
+        <span className="text-danger">{errors.password?.message}</span>
         </li>
         <li>
           <label htmlFor="rePassword">Re-Enter Password</label>
-          <input type="password" id="rePassword" name="rePassword" >
-          </input>
+          <input type="password" id="rePassword" name="rePassword"  ref={register({
+            required: "This field is required",
+            minLength: {
+              value: 6,
+              message: "min length is 6"
+            },
+            validate: {
+                passwordEqual: value => (value === getValues().password) || 'Password do not match'
+            },
+          })}></input>
+        <span className="text-danger">{errors.rePassword?.message}</span>
         </li>
         <li>
           <button type="submit" className="btn btn-primary btn-lg">Register</button>

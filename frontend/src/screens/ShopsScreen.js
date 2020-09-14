@@ -153,7 +153,7 @@ function ShopsScreen(props) {
                           <li>
                             <label htmlFor="image">Image</label>
                             <input
-                              type="text"
+                              type="hidden"
                               name="image"
                               value={image}
                               id="image"

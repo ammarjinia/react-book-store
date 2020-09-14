@@ -195,7 +195,7 @@ const productReviewDelete = useSelector((state) => state.productReviewDelete);
                           <li>
                             <label htmlFor="image">Image</label>
                             <input
-                              type="text"
+                              type="hidden"
                               name="image"
                               value={image}
                               id="image"

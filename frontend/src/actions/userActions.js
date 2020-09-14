@@ -53,7 +53,7 @@ const resetUser = (email) => async (dispatch) => {
     dispatch({ type: USER_RESET_FAIL, payload: error.response.data });
   }
 }
-const register = (name, email, password) => async (dispatch) => {
+const registeract = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
   try {
     const { data } = await Axios.post("/api/users/register", { name, email, password });
@@ -129,4 +129,4 @@ const deleteUser = (userId) => async (dispatch, getState) => {
   }
 };
 
-export { resetUser, signin, register, logout, update, listUsers, deleteUser, saveUser };
+export { resetUser, signin, registeract, logout, update, listUsers, deleteUser, saveUser };

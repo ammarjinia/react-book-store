@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
+import { useForm } from "react-hook-form";
 
 function SigninScreen(props) {
-
+      const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userSignin = useSelector(state => state.userSignin);
@@ -21,7 +22,6 @@ function SigninScreen(props) {
   }, [userInfo, props, redirect]);
 
   const submitHandler = (e) => {
-    e.preventDefault();
     dispatch(signin(email, password));
 
   }
@@ -38,7 +38,7 @@ function SigninScreen(props) {
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">
-    <form onSubmit={submitHandler} >
+    <form onSubmit={handleSubmit(submitHandler)}>
       <ul className="form-container">
         <li>
           <h2>Sign-In</h2>
@@ -51,13 +51,22 @@ function SigninScreen(props) {
           <label htmlFor="email">
             Email
           </label>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
+          <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} ref={register({
+                required: "This field is required",
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+                  message: "Please enter valid email address"
+                }
+              })}>
           </input>
+          {/* errors will return when field validation fails  */}
+          <span className="text-danger">{errors.email?.message}</span>
         </li>
         <li>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
+          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} ref={register({ required: true })}>
           </input>
+          {errors.password && <span className="text-danger">This field is required</span>}
         </li>
         <li>
           <button type="submit" className="btn btn-primary btn-lg">Signin</button>

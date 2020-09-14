@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetUser } from '../actions/userActions';
+import { useForm } from "react-hook-form";
 
 function ResetPasswordScreen(props) {
-
+  
+    const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const userReset = useSelector(state => state.userReset);
   const { loading, success, error } = userReset;
   const dispatch = useDispatch();
   const submitHandler = (e) => {
-    e.preventDefault();
     dispatch(resetUser(email));
   }
    useEffect(() => {
@@ -28,7 +29,7 @@ function ResetPasswordScreen(props) {
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">
-    <form onSubmit={submitHandler} >
+    <form onSubmit={handleSubmit(submitHandler)}>
       <ul className="form-container">
         <li>
           <h3>Forgot Password</h3>
@@ -43,8 +44,16 @@ function ResetPasswordScreen(props) {
           <label htmlFor="email">
             Email
           </label>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email}>
+          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} ref={register({
+                required: "This field is required",
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+                  message: "Please enter valid email address"
+                }
+              })}>
           </input>
+          {/* errors will return when field validation fails  */}
+          <span className="text-danger">{errors.email?.message}</span>
         </li>
         <li>
           <button type="submit" className="btn btn-primary btn-lg">Send Confirmation</button>
