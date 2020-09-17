@@ -3,18 +3,29 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
 function SigninScreen(props) {
-      const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const [verified, setVerified] = useState('');
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   useEffect(() => {
+    var vUserId = props.match.params.id;
     if (userInfo) {
       props.history.push(redirect);
+    }
+    if (vUserId) {
+        axios.post('/api/users/verify-email', {id:vUserId}).then((response) => {
+            setVerified(response.data);
+        }).catch((err) => {
+          console.log(err);
+        });
     }
     return () => {
       //
@@ -46,6 +57,7 @@ function SigninScreen(props) {
         <li>
           {loading && <div>Loading...</div>}
           {error && <div className="alert alert-danger">{error.message}</div>}
+          {verified && <div className="alert alert-success">{verified.message}</div>}
         </li>
         <li>
           <label htmlFor="email">

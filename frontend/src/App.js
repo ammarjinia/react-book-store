@@ -44,6 +44,7 @@ function App() {
         <Route path="/payment" component={PaymentScreen} />
         <Route path="/placeorder" component={PlaceOrderScreen} />
         <Route path="/reset" component={ResetPasswordScreen} />
+        <Route path="/verify-email/:id" component={SigninScreen} />
         <Route path="/signin" component={SigninScreen} />
         <Route path="/register" component={RegisterScreen} />
         <Route path="/product/:id" component={ProductScreen} />

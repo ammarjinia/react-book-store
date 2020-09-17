@@ -5,7 +5,7 @@ import { registeract } from '../actions/userActions';
 import { useForm } from "react-hook-form";
 
 function RegisterScreen(props) {
-    const { register, handleSubmit, errors, watch, getValues  } = useForm();
+    const { register, handleSubmit, errors, getValues  } = useForm();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

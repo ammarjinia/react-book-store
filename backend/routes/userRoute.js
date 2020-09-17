@@ -4,6 +4,17 @@ import { getToken, isAuth, isAdmin } from '../util';
 
 const router = express.Router();
 
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'info@gmail.com',
+    pass: 'Password'
+  }
+});
+
+
 router.put('/:id', isAuth, async (req, res) => {
   const userId = req.params.id;
   const user = await User.findById(userId);
@@ -51,6 +62,23 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/verify-email', async (req, res) => {
+  var userId = req.body.id;
+  const objUser = await User.findById(userId);
+  if (objUser) {
+    if (objUser.isVerified != true)
+    {
+        objUser.isVerified = true;
+        const updatedUser = await objUser.save();
+        res.status(200).send({ message: 'Your email is verified now!' });
+    } else {
+        res.status(401).send({ message: 'Your email is already verified.' });
+    }
+  } else {
+    res.status(401).send({ message: 'Something went wrong!' });
+  }
+});
+
 router.post('/resetuser', async (req, res) => {
   const resetUser = await User.findOne({
     email: req.body.email,
@@ -67,7 +95,7 @@ router.post('/register', async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    isVerified:true,
+    isVerified:false,
     isAdmin:false,
   });
   const chkUser = await User.findOne({
@@ -78,6 +106,20 @@ router.post('/register', async (req, res) => {
   } else {
     const newUser = await user.save();
     if (newUser) {
+       var mailOptions = {
+          from: 'info@gmail.com',
+          to: newUser.email,
+          subject: 'Book Store - Verify your account',
+          html: '<h4>Hello '+newUser.email+'</h4><p>Please verify your account by clicking on this link <a href="http://127.0.0.1:3000/verify-email/'+newUser.id+'">http://127.0.0.1:3000/verify-email/'+newUser.id+'</a>'
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+         
       res.send({
         _id: newUser.id,
         name: newUser.name,
