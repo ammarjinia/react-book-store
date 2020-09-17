@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetUser } from '../actions/userActions';
 import { useForm } from "react-hook-form";
@@ -33,12 +34,12 @@ function ResetPasswordScreen(props) {
       <ul className="form-container">
         <li>
           <h3>Forgot Password</h3>
-          <small>Enter your verified email address and we will send you a password reset link.</small>
+          <small>Enter your verified email address.</small>
         </li>
         <li>
           {loading && <div>Loading...</div>}
           {error && <div className="alert alert-danger">{error.message}</div>}
-          {success && <div className="alert alert-success">Check your email for a link to reset your password.</div>}    
+          {success && <div className="alert alert-success">Check your email for reset your password.</div>}    
         </li>
         <li>
           <label htmlFor="email">
@@ -57,6 +58,9 @@ function ResetPasswordScreen(props) {
         </li>
         <li>
           <button type="submit" className="btn btn-primary btn-lg">Send Confirmation</button>
+        </li>
+        <li>
+          <Link to={"/signin"} className="btn btn-secondary text-center" >Sign In</Link>
         </li>
       </ul>
     </form>

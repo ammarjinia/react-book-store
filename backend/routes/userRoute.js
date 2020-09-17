@@ -84,7 +84,23 @@ router.post('/resetuser', async (req, res) => {
     email: req.body.email,
   });
   if (resetUser) {
-    res.status(200).send({ message: "New Order Created"});
+      var newpass = Math.random().toString(36).substring(2, 8);
+      resetUser.password = newpass;
+      const updatedUser = await resetUser.save();
+      var mailOptions = {
+        from: 'info@gmail.com',
+        to: resetUser.email,
+        subject: 'Book Store - Reset account password',
+        html: '<h4>Hello '+resetUser.email+'</h4><p>Your New Password is: <br />'+newpass+'</p>'
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+    res.status(200).send({ message: "Password Reset Successfully!"});
   } else {
     res.status(401).send({ message: 'Invalid Email' });
   }
