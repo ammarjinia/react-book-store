@@ -45,7 +45,7 @@ function RegisterScreen(props) {
                     <div className="row">
                         <div className="offset-4 col-4">
                             <div className="form1">
-    <form onSubmit={handleSubmit(submitHandler)}>
+    <form id="frmRegister" onSubmit={handleSubmit(submitHandler)}>
       <ul className="form-container">
         <li>
           <h2>Create Account</h2>

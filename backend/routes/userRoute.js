@@ -9,8 +9,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'info@gmail.com',
-    pass: 'Password'
+    user: 'fastmartondemanddelivery@gmail.com',
+    pass: 'F52531999'
   }
 });
 
@@ -88,7 +88,7 @@ router.post('/resetuser', async (req, res) => {
       resetUser.password = newpass;
       const updatedUser = await resetUser.save();
       var mailOptions = {
-        from: 'info@gmail.com',
+        from: 'fastmartondemandanddelivery@gmail.com',
         to: resetUser.email,
         subject: 'Book Store - Reset account password',
         html: '<h4>Hello '+resetUser.email+'</h4><p>Your New Password is: <br />'+newpass+'</p>'
@@ -123,7 +123,7 @@ router.post('/register', async (req, res) => {
     const newUser = await user.save();
     if (newUser) {
        var mailOptions = {
-          from: 'info@gmail.com',
+          from: 'fastmartondemandanddelivery@gmail.com',
           to: newUser.email,
           subject: 'Book Store - Verify your account',
           html: '<h4>Hello '+newUser.email+'</h4><p>Please verify your account by clicking on this link <a href="http://127.0.0.1:3000/verify-email/'+newUser.id+'">http://127.0.0.1:3000/verify-email/'+newUser.id+'</a>'
